@@ -1,5 +1,5 @@
 {
-  "name": "@seyna-insurance/seyna-node-client",
+  "name": "@seyna/api-client",
   "version": "0.0.1",
   "description": "",
   "private": false,
@@ -8,18 +8,19 @@
     "start": "node build/index.js",
     "build": "npx tsc"
   },
-  "author": "guillaume.font@seyna.eu",
-  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seyna-insurance/seyna-node-client.git"
+  },
+  "bugs": {
+    "url": "https://github.com/seyna-insurance/seyna-node-client/issues"
+  },
+  "homepage": "https://github.com/seyna-insurance/seyna-node-client#readme",
   "dependencies": {
-    "@types/luxon": "^1.21.0",
-    "luxon": "^1.21.3",
     "node-fetch": "^2.6.0"
   },
   "devDependencies": {
     "@types/node-fetch": "^2.5.0",
     "typescript": "^3.6.3"
-  },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
   }
 }
