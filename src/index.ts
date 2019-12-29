@@ -10,7 +10,7 @@ import { List } from "./model/list";
 
 export { Claim, Contract, Error, List, Portfolio, Receipt, Settlement };
 
-export class Client {
+export default class {
   baseUrl: string = "https://api.seyna.eu/v1";
   apiKey: string;
   apiSecret: string;

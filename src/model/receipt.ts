@@ -1,5 +1,4 @@
 import { ReceiptGuarantees } from "./receipt_guarantee";
-import { DateTime } from "luxon";
 
 export class Receipt {
   portfolioId: string;

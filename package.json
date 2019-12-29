@@ -1,9 +1,9 @@
 {
   "name": "@seyna/api-client",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
-  "private": false,
   "main": "build/index.js",
+  "private": false,
   "scripts": {
     "start": "node build/index.js",
     "build": "npx tsc"
