@@ -1,8 +1,9 @@
 {
   "name": "@seyna/api-client",
-  "version": "0.0.2",
-  "description": "",
+  "version": "0.0.3",
+  "description": "Node client for the Seyna API",
   "main": "build/index.js",
+  "license": "MIT",
   "private": false,
   "scripts": {
     "start": "node build/index.js",
