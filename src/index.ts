@@ -10,7 +10,7 @@ import { List } from "./model/list";
 
 export { Claim, Contract, Error, List, Portfolio, Receipt, Settlement };
 
-export default class {
+export class Seyna {
   baseUrl: string = "https://api.seyna.eu/v1";
   apiKey: string;
   apiSecret: string;
@@ -19,7 +19,7 @@ export default class {
     this.apiSecret = options.apiSecret;
   }
 
-  async sendRequest(method: string, path: string, body?: any) {
+  private async sendRequest(method: string, path: string, body?: any) {
     let url = this.baseUrl + path;
     let headers: { [key: string]: string } = {};
     headers["Accept"] = "application/json";
