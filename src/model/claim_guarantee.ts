@@ -8,6 +8,10 @@ export class ClaimGuarantees {
       ])
     );
   }
+
+  toJSON() {
+    return this.data;
+  }
 }
 
 export class ClaimGuarantee {

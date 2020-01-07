@@ -18,6 +18,9 @@ export class ContractGuarantees {
         new ContractGuarantee()
       );
   }
+  toJSON() {
+    return this.data;
+  }
 }
 
 export class ContractGuarantee {

@@ -8,6 +8,9 @@ export class SettlementGuarantees {
       ])
     );
   }
+  toJSON() {
+    return this.data;
+  }
 }
 
 export class SettlementGuarantee {

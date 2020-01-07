@@ -16,6 +16,9 @@ export class ReceiptGuarantees {
         new ReceiptGuarantee()
       );
   }
+  toJSON() {
+    return this.data;
+  }
 }
 
 export class ReceiptGuarantee {
