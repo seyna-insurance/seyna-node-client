@@ -19,7 +19,6 @@ export class Receipt {
   startCoverDate: string;
   endCoverDate: string;
   guarantees: ReceiptGuarantees;
-  guaranteesDelta: ReceiptGuarantees;
   productData: any;
 
   constructor(input: any) {
@@ -41,7 +40,6 @@ export class Receipt {
     this.startCoverDate = input.start_cover_date;
     this.endCoverDate = input.end_cover_date;
     this.guarantees = new ReceiptGuarantees(input.guarantees);
-    this.guaranteesDelta = new ReceiptGuarantees(input.guarantees_delta);
     this.productData = input.product_data;
   }
 }

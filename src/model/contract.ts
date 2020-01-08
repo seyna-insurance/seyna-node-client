@@ -79,7 +79,6 @@ export class Contract {
   cancelDate?: string;
   cancelReason?: string;
   guarantees: ContractGuarantees;
-  guaranteesDelta: ContractGuarantees;
   productData: any;
 
   constructor(input: any) {
@@ -108,9 +107,6 @@ export class Contract {
     this.cancelDate = input.cancel_date;
     this.cancelReason = input.cancel_reason;
     this.guarantees = ContractGuarantees.fromResponse(input.guarantees);
-    this.guaranteesDelta = ContractGuarantees.fromResponse(
-      input.guarantees_delta
-    );
     this.productData = input.product_data;
   }
 }

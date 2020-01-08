@@ -16,7 +16,6 @@ export class Settlement {
   creationDate: string;
   lastUpdate: string;
   guarantees: SettlementGuarantees;
-  guaranteesDelta: SettlementGuarantees;
   productData: any;
 
   constructor(input: any) {
@@ -35,7 +34,6 @@ export class Settlement {
     this.creationDate = input.creation_date;
     this.lastUpdate = input.last_update;
     this.guarantees = new SettlementGuarantees(input.guarantees);
-    this.guaranteesDelta = new SettlementGuarantees(input.guarantees_delta);
     this.productData = input.product_data;
   }
 }

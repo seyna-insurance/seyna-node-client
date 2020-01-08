@@ -18,7 +18,6 @@ export class Claim {
   claimType: string;
   revaluationReason?: string;
   guarantees: ClaimGuarantees;
-  guaranteesDelta: ClaimGuarantees;
   productData: any;
 
   constructor(input: any) {
@@ -38,7 +37,6 @@ export class Claim {
     this.claimType = input.claim_type;
     this.revaluationReason = input.revaluation_reason;
     this.guarantees = new ClaimGuarantees(input.guarantees);
-    this.guaranteesDelta = new ClaimGuarantees(input.guarantees_delta);
     this.productData = input.product_data;
   }
 }
