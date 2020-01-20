@@ -52,7 +52,7 @@ for await (let receipt of seyna.iterReceipts(portfolioId)) {
 }
 
 // List receipts for a portfolio
-let contractList: List<Contract> = await seyna.listReceipts(portfolioId);
+let contractList: List<Receipt> = await seyna.listReceipts(portfolioId);
 
 // Get receipt information
 let receipt: Receipt = await seyna.getReceipt(receiptId);

@@ -1,6 +1,9 @@
-import { ClaimGuarantees } from "./claim_guarantee";
+import { clientSym } from "../utils";
+import { Seyna } from "..";
 
 export class Claim {
+  [clientSym]: Seyna;
+
   portfolioId: string;
   contractId: string;
   productId: string;
@@ -20,7 +23,9 @@ export class Claim {
   guarantees: ClaimGuarantees;
   productData: any;
 
-  constructor(input: any) {
+  constructor(input: any, client: Seyna) {
+    this[clientSym] = client;
+
     this.portfolioId = input.product_id;
     this.contractId = input.contract_id;
     this.productId = input.product_id;
@@ -38,5 +43,40 @@ export class Claim {
     this.revaluationReason = input.revaluation_reason;
     this.guarantees = new ClaimGuarantees(input.guarantees);
     this.productData = input.product_data;
+  }
+}
+
+export class ClaimGuarantees {
+  data: { [guarantee: string]: ClaimGuarantee };
+  constructor(input: any) {
+    this.data = Object.fromEntries(
+      Object.entries(input).map(([guarantee, value]) => [
+        guarantee,
+        new ClaimGuarantee(value)
+      ])
+    );
+  }
+
+  toJSON() {
+    return this.data;
+  }
+}
+
+export class ClaimGuarantee {
+  fguClaim: number;
+  paid: number;
+  outstanding: number;
+  managementPaid: number;
+  managementOutstanding: number;
+  subrogationPaid: number;
+  subrogationOutstanding: number;
+  constructor(input: any) {
+    this.fguClaim = input.fgu_claim;
+    this.paid = input.paid;
+    this.outstanding = input.outstanding;
+    this.managementPaid = input.management_paid;
+    this.managementOutstanding = input.management_outstanding;
+    this.subrogationPaid = input.subrogation_paid;
+    this.subrogationOutstanding = input.subrogation_outstanding;
   }
 }

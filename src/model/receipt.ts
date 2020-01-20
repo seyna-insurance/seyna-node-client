@@ -1,6 +1,8 @@
-import { ReceiptGuarantees } from "./receipt_guarantee";
+import { clientSym } from "../utils";
+import { Seyna } from "..";
 
 export class Receipt {
+  [clientSym]: Seyna;
   portfolioId: string;
   contractId: string;
   contractEventNum: number;
@@ -21,7 +23,9 @@ export class Receipt {
   guarantees: ReceiptGuarantees;
   productData: any;
 
-  constructor(input: any) {
+  constructor(input: any, client: Seyna) {
+    this[clientSym] = client;
+
     this.portfolioId = input.portfolio_id;
     this.contractId = input.contract_id;
     this.contractEventNum = input.contract_event_num;
@@ -41,5 +45,54 @@ export class Receipt {
     this.endCoverDate = input.end_cover_date;
     this.guarantees = new ReceiptGuarantees(input.guarantees);
     this.productData = input.product_data;
+  }
+}
+
+export class ReceiptGuarantees {
+  data: { [guarantee: string]: ReceiptGuarantee };
+  constructor(input: any) {
+    this.data = Object.fromEntries(
+      Object.entries(input).map(([guarantee, value]) => [
+        guarantee,
+        ReceiptGuarantee.fromResponse(value)
+      ])
+    );
+  }
+  sum(): ReceiptGuarantee {
+    return Object.entries(this.data)
+      .map(([guarantee, value]) => value)
+      .reduce(
+        (previous, current) => previous.plus(current),
+        new ReceiptGuarantee()
+      );
+  }
+  toJSON() {
+    return this.data;
+  }
+}
+
+export class ReceiptGuarantee {
+  premium: number = 0;
+  tax: number = 0;
+  discount: number = 0;
+  brokerFee: number = 0;
+  costAcquisition: number = 0;
+  static fromResponse(input: any) {
+    let result = new ReceiptGuarantee();
+    result.premium = input.premium;
+    result.tax = input.tax;
+    result.discount = input.discount;
+    result.brokerFee = input.broker_fee;
+    result.costAcquisition = input.cost_acquisition;
+    return result;
+  }
+  plus(value: ReceiptGuarantee): ReceiptGuarantee {
+    let result = new ReceiptGuarantee();
+    result.premium = this.premium + value.premium;
+    result.tax = this.tax + value.tax;
+    result.discount = this.discount + value.discount;
+    result.brokerFee = this.brokerFee + value.brokerFee;
+    result.costAcquisition = this.costAcquisition + value.costAcquisition;
+    return result;
   }
 }
