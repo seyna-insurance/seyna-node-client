@@ -18,6 +18,7 @@ export {
   Error,
   List,
   Portfolio,
+  Receipt,
   ReceiptGuarantees,
   SettlementGuarantees
 };
