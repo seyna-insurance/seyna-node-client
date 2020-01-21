@@ -134,7 +134,7 @@ export class Seyna {
     options: ListOptions = {}
   ): Promise<List<Receipt>> {
     let url = "/portfolios/" + portfolioId + "/receipts";
-    if (!objectIsEmpty(options)) url += "." + stringify(options);
+    if (!objectIsEmpty(options)) url += "?" + stringify(options);
     let data = await this.sendRequest("GET", url);
     return new List<Receipt>(data, this);
   }
@@ -157,7 +157,7 @@ export class Seyna {
     options: ListOptions = {}
   ): Promise<List<Receipt>> {
     let url = "/portfolios/" + portfolioId + "/receipt-versions";
-    if (!objectIsEmpty(options)) url += "." + stringify(options);
+    if (!objectIsEmpty(options)) url += "?" + stringify(options);
     let data = await this.sendRequest("GET", url);
     return new List<Receipt>(data, this);
   }
