@@ -20,6 +20,7 @@ export {
   Portfolio,
   Receipt,
   ReceiptGuarantees,
+  Settlement,
   SettlementGuarantees
 };
 
