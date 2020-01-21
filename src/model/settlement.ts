@@ -47,9 +47,17 @@ export class SettlementGuarantees {
     this.data = Object.fromEntries(
       Object.entries(input).map(([guarantee, value]) => [
         guarantee,
-        new SettlementGuarantee(value)
+        SettlementGuarantee.fromResponse(value)
       ])
     );
+  }
+  sum(): SettlementGuarantee {
+    return Object.entries(this.data)
+      .map(([guarantee, value]) => value)
+      .reduce(
+        (previous, current) => previous.plus(current),
+        new SettlementGuarantee()
+      );
   }
   toJSON() {
     return this.data;
@@ -57,12 +65,23 @@ export class SettlementGuarantees {
 }
 
 export class SettlementGuarantee {
-  paid: number;
-  managementPaid: number;
-  subrogationPaid: number;
-  constructor(input: any) {
-    this.paid = input.paid;
-    this.managementPaid = input.management_paid;
-    this.subrogationPaid = input.subrogation_paid;
+  paid: number = 0;
+  managementPaid: number = 0;
+  subrogationPaid: number = 0;
+
+  static fromResponse(input: any) {
+    let result = new SettlementGuarantee();
+    result.paid = input.paid;
+    result.managementPaid = input.management_paid;
+    result.subrogationPaid = input.subrogation_paid;
+    return result;
+  }
+
+  plus(value: SettlementGuarantee): SettlementGuarantee {
+    let result = new SettlementGuarantee();
+    result.paid = this.paid + value.paid;
+    result.managementPaid = this.managementPaid + value.managementPaid;
+    result.subrogationPaid = this.subrogationPaid + value.subrogationPaid;
+    return result;
   }
 }

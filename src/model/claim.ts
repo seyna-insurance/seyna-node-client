@@ -52,9 +52,18 @@ export class ClaimGuarantees {
     this.data = Object.fromEntries(
       Object.entries(input).map(([guarantee, value]) => [
         guarantee,
-        new ClaimGuarantee(value)
+        ClaimGuarantee.fromResponse(value)
       ])
     );
+  }
+
+  sum(): ClaimGuarantee {
+    return Object.entries(this.data)
+      .map(([guarantee, value]) => value)
+      .reduce(
+        (previous, current) => previous.plus(current),
+        new ClaimGuarantee()
+      );
   }
 
   toJSON() {
@@ -63,20 +72,35 @@ export class ClaimGuarantees {
 }
 
 export class ClaimGuarantee {
-  fguClaim: number;
-  paid: number;
-  outstanding: number;
-  managementPaid: number;
-  managementOutstanding: number;
-  subrogationPaid: number;
-  subrogationOutstanding: number;
-  constructor(input: any) {
-    this.fguClaim = input.fgu_claim;
-    this.paid = input.paid;
-    this.outstanding = input.outstanding;
-    this.managementPaid = input.management_paid;
-    this.managementOutstanding = input.management_outstanding;
-    this.subrogationPaid = input.subrogation_paid;
-    this.subrogationOutstanding = input.subrogation_outstanding;
+  fguClaim: number = 0;
+  paid: number = 0;
+  outstanding: number = 0;
+  managementPaid: number = 0;
+  managementOutstanding: number = 0;
+  subrogationPaid: number = 0;
+  subrogationOutstanding: number = 0;
+  static fromResponse(input: any): ClaimGuarantee {
+    let result = new ClaimGuarantee();
+    result.fguClaim = input.fgu_claim;
+    result.paid = input.paid;
+    result.outstanding = input.outstanding;
+    result.managementPaid = input.management_paid;
+    result.managementOutstanding = input.management_outstanding;
+    result.subrogationPaid = input.subrogation_paid;
+    result.subrogationOutstanding = input.subrogation_outstanding;
+    return result;
+  }
+  plus(value: ClaimGuarantee): ClaimGuarantee {
+    let result = new ClaimGuarantee();
+    result.fguClaim = this.fguClaim + value.fguClaim;
+    result.outstanding = this.outstanding + value.outstanding;
+    result.paid = this.paid + value.paid;
+    result.managementOutstanding =
+      this.managementOutstanding + value.managementOutstanding;
+    result.managementPaid = this.managementPaid + value.managementPaid;
+    result.subrogationOutstanding =
+      this.subrogationOutstanding + value.subrogationOutstanding;
+    result.subrogationPaid = this.subrogationPaid + value.subrogationPaid;
+    return result;
   }
 }
