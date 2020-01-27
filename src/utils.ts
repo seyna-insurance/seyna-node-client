@@ -12,6 +12,7 @@ export const clientSym = Symbol();
 export type ListOptions = {
   from?: string;
   limit?: number;
+  sort?: "asc" | "desc";
 };
 
 export type ParsableObject =

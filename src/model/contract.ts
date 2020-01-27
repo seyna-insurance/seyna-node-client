@@ -14,6 +14,7 @@ export class ContractGuarantees {
     );
     return result;
   }
+
   sum(): ContractGuarantee {
     return Object.entries(this.data)
       .map(([guarantee, value]) => value)
@@ -34,6 +35,7 @@ export class ContractGuarantee {
   discount: number = 0;
   brokerFee: number = 0;
   costAcquisition: number = 0;
+
   static fromResponse(input: any) {
     let result = new ContractGuarantee();
     result.premium = input.premium;
@@ -43,6 +45,7 @@ export class ContractGuarantee {
     result.costAcquisition = input.cost_acquisition;
     return result;
   }
+
   plus(value: ContractGuarantee): ContractGuarantee {
     let result = new ContractGuarantee();
     result.premium = this.premium + value.premium;
