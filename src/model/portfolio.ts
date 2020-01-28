@@ -35,12 +35,44 @@ export class Portfolio {
     }
   }
 
+  async listContractVersions(
+    options: ListOptions = {}
+  ): Promise<List<Contract>> {
+    return this[clientSym].listContractVersions(this.id, options);
+  }
+
+  async *iterContractVersions(
+    options: ListOptions = {}
+  ): AsyncGenerator<Contract> {
+    for await (let contract of this[clientSym].iterContractVersions(
+      this.id,
+      options
+    )) {
+      yield contract;
+    }
+  }
+
   async listReceipts(options: ListOptions = {}): Promise<List<Receipt>> {
     return this[clientSym].listReceipts(this.id, options);
   }
 
   async *iterReceipts(options: ListOptions = {}): AsyncGenerator<Receipt> {
     for await (let receipt of this[clientSym].iterReceipts(this.id, options)) {
+      yield receipt;
+    }
+  }
+
+  async listReceiptVersions(options: ListOptions = {}): Promise<List<Receipt>> {
+    return this[clientSym].listReceiptVersions(this.id, options);
+  }
+
+  async *iterReceiptVersions(
+    options: ListOptions = {}
+  ): AsyncGenerator<Receipt> {
+    for await (let receipt of this[clientSym].iterReceiptVersions(
+      this.id,
+      options
+    )) {
       yield receipt;
     }
   }
@@ -55,6 +87,19 @@ export class Portfolio {
     }
   }
 
+  async listClaimVersions(options: ListOptions = {}): Promise<List<Claim>> {
+    return this[clientSym].listClaimVersions(this.id, options);
+  }
+
+  async *iterClaimVersions(options: ListOptions = {}): AsyncGenerator<Claim> {
+    for await (let claim of this[clientSym].iterClaimVersions(
+      this.id,
+      options
+    )) {
+      yield claim;
+    }
+  }
+
   async listSettlements(options: ListOptions = {}): Promise<List<Settlement>> {
     return this[clientSym].listSettlements(this.id, options);
   }
@@ -63,6 +108,23 @@ export class Portfolio {
     options: ListOptions = {}
   ): AsyncGenerator<Settlement> {
     for await (let settlement of this[clientSym].iterSettlements(
+      this.id,
+      options
+    )) {
+      yield settlement;
+    }
+  }
+
+  async listSettlementVersions(
+    options: ListOptions = {}
+  ): Promise<List<Settlement>> {
+    return this[clientSym].listSettlements(this.id, options);
+  }
+
+  async *iterSettlementVersions(
+    options: ListOptions = {}
+  ): AsyncGenerator<Settlement> {
+    for await (let settlement of this[clientSym].iterSettlementVersions(
       this.id,
       options
     )) {
