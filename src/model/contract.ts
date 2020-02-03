@@ -118,7 +118,7 @@ export class Contract {
   productId: string;
 
   eventNum: number;
-  eventType: string;
+  eventType: "new" | "update" | "cancel";
   eventDate: string;
 
   ref: string;

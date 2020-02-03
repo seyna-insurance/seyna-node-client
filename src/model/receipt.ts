@@ -9,7 +9,7 @@ export class Receipt {
   productId: string;
   id: string;
   eventNum: number;
-  eventType: string;
+  eventType: "new" | "update" | "paid" | "overdue";
   eventDate: string;
   ref: string;
   debug?: string;
