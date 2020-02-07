@@ -10,7 +10,7 @@ export class Settlement {
   productId: string;
   id: string;
   eventNum: number;
-  eventType: string;
+  eventType: "new";
   eventDate: string;
   ref: string;
   debug?: string;
