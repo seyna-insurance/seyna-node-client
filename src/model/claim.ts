@@ -26,7 +26,7 @@ export class Claim {
   constructor(input: any, client: Seyna) {
     this[clientSym] = client;
 
-    this.portfolioId = input.product_id;
+    this.portfolioId = input.portfolio_id;
     this.contractId = input.contract_id;
     this.productId = input.product_id;
     this.id = input.id;
