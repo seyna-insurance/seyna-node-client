@@ -1,8 +1,5 @@
-import { clientSym } from "../utils";
-import { Seyna } from "..";
-
 export class Receipt {
-  portfolio_dd: string;
+  portfolio_id: string;
   contract_id: string;
   contract_event_num: number;
   product_id: string;
@@ -27,7 +24,7 @@ export class Receipt {
   static fromInput(input: any): Receipt {
     let receipt = new Receipt();
 
-    receipt.portfolio_dd = input.portfolio_id;
+    receipt.portfolio_id = input.portfolio_id;
     receipt.contract_id = input.contract_id;
     receipt.contract_event_num = input.contract_event_num;
     receipt.product_id = input.product_id;
@@ -48,6 +45,10 @@ export class Receipt {
     receipt.product_data = input.product_data;
 
     return receipt;
+  }
+
+  addGuarantee(guarantee_name: string, guarantee_data: ReceiptGuarantee) {
+    this.guarantees.addGuarantee(guarantee_name, guarantee_data);
   }
 }
 

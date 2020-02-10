@@ -25,14 +25,8 @@ export class ContractGuarantees {
       );
   }
 
-  toOutput() {
-    return Object.fromEntries(
-      Object.entries(this.data).map(
-        ([key, guarantee]: [string, ContractGuarantee]) => {
-          return [key, guarantee.toOutput()];
-        }
-      )
-    );
+  toJSON() {
+    return this.data;
   }
 }
 

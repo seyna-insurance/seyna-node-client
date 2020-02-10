@@ -38,6 +38,10 @@ export class Settlement {
     settlement.product_data = input.product_data;
     return settlement;
   }
+
+  addGuarantee(guarantee_name: string, guarantee_data: SettlementGuarantee) {
+    this.guarantees.addGuarantee(guarantee_name, guarantee_data);
+  }
 }
 
 export class SettlementGuarantees {
