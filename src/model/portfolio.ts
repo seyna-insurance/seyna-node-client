@@ -9,14 +9,14 @@ import { Settlement } from "./settlement";
 export class Portfolio {
   [clientSym]: Seyna;
   id: string;
-  productId: string;
+  product_id: string;
   timezone: string;
   name?: string;
   live?: boolean;
   constructor(input: any, client: Seyna) {
     this[clientSym] = client;
     this.id = input.id;
-    this.productId = input.product_id;
+    this.product_id = input.product_id;
     this.timezone = input.timezone;
     this.name = input.name;
     this.live = input.live;

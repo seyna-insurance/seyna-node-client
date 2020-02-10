@@ -3,48 +3,48 @@ import { Seyna } from "..";
 
 export class Receipt {
   [clientSym]: Seyna;
-  portfolioId: string;
-  contractId: string;
-  contractEventNum: number;
-  productId: string;
+  portfolio_dd: string;
+  contract_id: string;
+  contract_event_num: number;
+  product_id: string;
   id: string;
-  eventNum: number;
-  eventType: string;
-  eventDate: string;
+  event_num: number;
+  event_type: string;
+  event_date: string;
   ref: string;
   debug?: string;
-  issuanceDate: string;
-  dueDate: string;
-  paymentDate?: string;
-  creationDate: string;
-  lastUpdate: string;
-  startCoverDate: string;
-  endCoverDate: string;
+  issuance_date: string;
+  due_date: string;
+  payment_date?: string;
+  creation_date: string;
+  last_update: string;
+  start_cover_date: string;
+  endcover_date: string;
   guarantees: ReceiptGuarantees;
-  productData: any;
+  product_data: any;
 
   constructor(input: any, client: Seyna) {
     this[clientSym] = client;
 
-    this.portfolioId = input.portfolio_id;
-    this.contractId = input.contract_id;
-    this.contractEventNum = input.contract_event_num;
-    this.productId = input.product_id;
+    this.portfolio_dd = input.portfolio_id;
+    this.contract_id = input.contract_id;
+    this.contract_event_num = input.contract_event_num;
+    this.product_id = input.product_id;
     this.id = input.id;
-    this.eventNum = input.event_num;
-    this.eventType = input.event_type;
-    this.eventDate = input.event_date;
+    this.event_num = input.event_num;
+    this.event_type = input.event_type;
+    this.event_date = input.event_date;
     this.ref = input.ref;
     this.debug = input.debug;
-    this.issuanceDate = input.issuance_date;
-    this.dueDate = input.due_date;
-    this.paymentDate = input.payment_date;
-    this.creationDate = input.creation_date;
-    this.lastUpdate = input.last_update;
-    this.startCoverDate = input.start_cover_date;
-    this.endCoverDate = input.end_cover_date;
+    this.issuance_date = input.issuance_date;
+    this.due_date = input.due_date;
+    this.payment_date = input.payment_date;
+    this.creation_date = input.creation_date;
+    this.last_update = input.last_update;
+    this.start_cover_date = input.start_cover_date;
+    this.endcover_date = input.end_cover_date;
     this.guarantees = new ReceiptGuarantees(input.guarantees);
-    this.productData = input.product_data;
+    this.product_data = input.product_data;
   }
 }
 
@@ -75,15 +75,15 @@ export class ReceiptGuarantee {
   premium: number = 0;
   tax: number = 0;
   discount: number = 0;
-  brokerFee: number = 0;
-  costAcquisition: number = 0;
+  broker_fee: number = 0;
+  cost_acquisition: number = 0;
   static fromResponse(input: any) {
     let result = new ReceiptGuarantee();
     result.premium = input.premium;
     result.tax = input.tax;
     result.discount = input.discount;
-    result.brokerFee = input.broker_fee;
-    result.costAcquisition = input.cost_acquisition;
+    result.broker_fee = input.broker_fee;
+    result.cost_acquisition = input.cost_acquisition;
     return result;
   }
   plus(value: ReceiptGuarantee): ReceiptGuarantee {
@@ -91,8 +91,8 @@ export class ReceiptGuarantee {
     result.premium = this.premium + value.premium;
     result.tax = this.tax + value.tax;
     result.discount = this.discount + value.discount;
-    result.brokerFee = this.brokerFee + value.brokerFee;
-    result.costAcquisition = this.costAcquisition + value.costAcquisition;
+    result.broker_fee = this.broker_fee + value.broker_fee;
+    result.cost_acquisition = this.cost_acquisition + value.cost_acquisition;
     return result;
   }
 }
