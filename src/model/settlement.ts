@@ -45,7 +45,7 @@ export class Settlement {
 }
 
 export class SettlementGuarantees {
-  data: { [guarantee: string]: SettlementGuarantee };
+  data: { [guarantee: string]: SettlementGuarantee } = {};
   static fromInput(input: any): SettlementGuarantees {
     let guarantees = new SettlementGuarantees();
     Object.entries(input).forEach(([guarantee_name, guarantee_data]) =>
