@@ -45,7 +45,7 @@ export class Seyna {
     // Set request body
     let body = input ? JSON.stringify(input) : undefined;
 
-    let response = await fetch(url, { headers, body });
+    let response = await fetch(url, { headers, body, method });
     let data = await response.json();
     if (response.status > 299) {
       throw Error.fromInput(data);
