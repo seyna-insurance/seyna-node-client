@@ -15,7 +15,7 @@ export class Claim {
   notificationDate: string;
   claim_type: string;
   revaluation_reason?: string;
-  guarantees: ClaimGuarantees;
+  guarantees: ClaimGuarantees = new ClaimGuarantees();
   product_data: any;
 
   static fromInput(input: any): Claim {
@@ -40,6 +40,10 @@ export class Claim {
     claim.product_data = input.product_data;
 
     return claim;
+  }
+
+  addGuarantee(guarantee_name: string, guarantee_data: ClaimGuarantee) {
+    this.guarantees.addGuarantee(guarantee_name, guarantee_data);
   }
 }
 

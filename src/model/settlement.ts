@@ -15,7 +15,7 @@ export class Settlement {
   payment_date: string;
   creation_date: string;
   last_update: string;
-  guarantees: SettlementGuarantees;
+  guarantees: SettlementGuarantees = new SettlementGuarantees();
   product_data: any;
 
   static fromInput(input: any): Settlement {

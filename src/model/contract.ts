@@ -1,6 +1,3 @@
-import { clientSym } from "../utils";
-import { Seyna } from "..";
-
 export class ContractGuarantees {
   data: { [guarantee: string]: ContractGuarantee } = {};
 
@@ -194,7 +191,7 @@ export class Contract {
   extra_broker_fee?: number;
   cancel_date?: string;
   cancel_reason?: string;
-  guarantees: ContractGuarantees;
+  guarantees: ContractGuarantees = new ContractGuarantees();
   product_data: any;
 
   static fromInput(input: any): Contract {
@@ -234,6 +231,10 @@ export class Contract {
     return contract;
   }
 
+  addGuarantee(guarantee_name: string, guarantee_data: ContractGuarantee) {
+    this.guarantees.addGuarantee(guarantee_name, guarantee_data);
+  }
+
   addSubscriber(entitiy: Entity) {
     this.subscriber.push(entitiy);
   }
@@ -244,49 +245,5 @@ export class Contract {
 
   addBeneficiary(entitiy: Entity) {
     this.beneficiary.push(entitiy);
-  }
-
-  toOutput(): any {
-    let output: any = {};
-
-    output.portfolio_id = this.portfolio_id;
-    output.id = this.id;
-    output.product_id = this.product_id;
-
-    output.event_num = this.event_num;
-    output.event_type = this.event_type;
-    output.event_date = this.event_date;
-
-    output.ref = this.ref;
-    output.debug = this.debug;
-
-    output.customer_id = this.customer_id;
-
-    output.subscriber = this.subscriber.map(subscriber =>
-      subscriber.toOutput()
-    );
-    output.insured = this.insured.map(insured => insured.toOutput());
-    output.beneficiary = this.beneficiary.map(beneficiary =>
-      beneficiary.toOutput()
-    );
-
-    output.splitting_type = this.splitting_type;
-    output.splitting_fee = this.splitting_fee;
-
-    output.subscription_date = this.subscription_date;
-    output.issuance_date = this.issuance_date;
-    output.start_cover_date = this.start_cover_date;
-    output.end_cover_date = this.end_cover_date;
-
-    output.coinsurance = this.coinsurance;
-    output.extra_broker_fee = this.extra_broker_fee;
-    output.cancel_date = this.cancel_date;
-    output.cancel_reason = this.cancel_reason;
-
-    output.guarantees = this.guarantees.toOutput();
-
-    output.product_data = this.product_data;
-
-    return output;
   }
 }

@@ -21,7 +21,7 @@ export class Receipt {
   last_update: string;
   start_cover_date: string;
   endcover_date: string;
-  guarantees: ReceiptGuarantees;
+  guarantees: ReceiptGuarantees = new ReceiptGuarantees();
   product_data: any;
 
   static fromInput(input: any): Receipt {
