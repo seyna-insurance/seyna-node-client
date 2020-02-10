@@ -13,12 +13,12 @@ import { objectIsEmpty, ListOptions } from "./utils";
 export {
   Claim,
   ClaimGuarantees,
-  Claim as Contract,
+  Contract,
   ContractGuarantees,
   Error,
   List,
   Portfolio,
-  Claim as Receipt,
+  Receipt,
   ReceiptGuarantees,
   Settlement,
   SettlementGuarantees
@@ -76,9 +76,9 @@ export class Seyna {
     } while (options.from);
   }
 
-  async getContract(contract_id: string): Promise<Claim> {
+  async getContract(contract_id: string): Promise<Contract> {
     let body = await this.sendRequest("GET", "/contracts/" + contract_id);
-    return new Claim(body, this);
+    return new Contract(body, this);
   }
 
   async createContract(contract: Contract): Promise<Contract> {
@@ -145,18 +145,18 @@ export class Seyna {
     } while (options.from);
   }
 
-  async getReceipt(contract_id: string): Promise<Claim> {
+  async getReceipt(contract_id: string): Promise<Receipt> {
     let body = await this.sendRequest("GET", "/receipts/" + contract_id);
-    return new Claim(body, this);
+    return new Receipt(body, this);
   }
 
-  async createReceipt(receipt: Receipt) {
+  async createReceipt(receipt: Receipt): Promise<Receipt> {
     let url = "/receipts";
     let body = await this.sendRequest("POST", url, receipt);
     return new Receipt(body, this);
   }
 
-  async updateReceipt(receipt: Receipt) {
+  async updateReceipt(receipt: Receipt): Promise<Receipt> {
     let url = `/receipts/${receipt.id}`;
     let body = await this.sendRequest("PUT", url, receipt);
     return new Receipt(body, this);
@@ -282,13 +282,13 @@ export class Seyna {
     return new Settlement(body, this);
   }
 
-  async createSettlement(settlement: Settlement) {
+  async createSettlement(settlement: Settlement): Promise<Settlement> {
     let url = "/settlements";
     let body = await this.sendRequest("POST", url, settlement);
     return new Settlement(body, this);
   }
 
-  async updateSettlement(settlement: Settlement) {
+  async updateSettlement(settlement: Settlement): Promise<Settlement> {
     let url = `/settlements/${settlement.id}`;
     let body = await this.sendRequest("PUT", url, settlement);
     return new Settlement(body, this);
