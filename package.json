@@ -1,6 +1,6 @@
 {
   "name": "@seyna/api-client",
-  "version": "0.2.8",
+  "version": "0.2.9",
   "description": "Node client for the Seyna API",
   "main": "build/index.js",
   "license": "ISC",
