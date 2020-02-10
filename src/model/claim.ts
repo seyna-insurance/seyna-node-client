@@ -12,7 +12,7 @@ export class Claim {
   last_update: string;
   occurence_date: string;
   occurent_location: string;
-  notificationDate: string;
+  notification_date: string;
   claim_type: string;
   revaluation_reason?: string;
   guarantees: ClaimGuarantees = new ClaimGuarantees();
@@ -33,7 +33,7 @@ export class Claim {
     claim.last_update = input.last_update;
     claim.occurence_date = input.occurence_date;
     claim.occurent_location = input.occurence_location;
-    claim.notificationDate = input.notification_date;
+    claim.notification_date = input.notification_date;
     claim.claim_type = input.claim_type;
     claim.revaluation_reason = input.revaluation_reason;
     claim.guarantees = ClaimGuarantees.fromInput(input.guarantees);
