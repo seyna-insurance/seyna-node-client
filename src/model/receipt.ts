@@ -6,7 +6,7 @@ export class Receipt {
   id: string;
 
   event_num: number;
-  event_type: "new" | "update" | "paid" | "overdue";
+  event_type: "new" | "update" | "payment" | "overdue";
   event_date: string;
 
   ref: string;
@@ -19,7 +19,7 @@ export class Receipt {
   start_cover_date: string;
   end_cover_date: string;
   guarantees: ReceiptGuarantees = new ReceiptGuarantees();
-  product_data: any;
+  product_data: any = {};
 
   static fromInput(input: any): Receipt {
     let receipt = new Receipt();

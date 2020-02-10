@@ -16,7 +16,7 @@ export class Claim {
   claim_type: string;
   revaluation_reason?: string;
   guarantees: ClaimGuarantees = new ClaimGuarantees();
-  product_data: any;
+  product_data: any = {};
 
   static fromInput(input: any): Claim {
     let claim = new Claim();

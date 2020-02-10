@@ -180,7 +180,7 @@ export class Contract {
   cancel_date?: string;
   cancel_reason?: string;
   guarantees: ContractGuarantees = new ContractGuarantees();
-  product_data: any;
+  product_data: any = {};
 
   static fromInput(input: any): Contract {
     let contract = new Contract();
