@@ -1,9 +1,7 @@
 import { clientSym } from "../utils";
-import { Seyna } from "..";
+import { Seyna, Contract } from "..";
 
 export class Claim {
-  [clientSym]: Seyna;
-
   portfolio_id: string;
   contract_id: string;
   product_id: string;
@@ -23,26 +21,28 @@ export class Claim {
   guarantees: ClaimGuarantees;
   product_data: any;
 
-  constructor(input: any, client: Seyna) {
-    this[clientSym] = client;
+  static fromInput(input: any): Claim {
+    let claim = new Claim();
 
-    this.portfolio_id = input.portfolio_id;
-    this.contract_id = input.contract_id;
-    this.product_id = input.product_id;
-    this.id = input.id;
-    this.event_num = input.event_num;
-    this.event_type = input.event_type;
-    this.event_date = input.event_date;
-    this.ref = input.ref;
-    this.creation_date = input.creation_date;
-    this.last_update = input.last_update;
-    this.occurence_date = input.occurence_date;
-    this.occurent_location = input.occurence_location;
-    this.notificationDate = input.notification_date;
-    this.claim_type = input.claim_type;
-    this.revaluation_reason = input.revaluation_reason;
-    this.guarantees = new ClaimGuarantees(input.guarantees);
-    this.product_data = input.product_data;
+    claim.portfolio_id = input.portfolio_id;
+    claim.contract_id = input.contract_id;
+    claim.product_id = input.product_id;
+    claim.id = input.id;
+    claim.event_num = input.event_num;
+    claim.event_type = input.event_type;
+    claim.event_date = input.event_date;
+    claim.ref = input.ref;
+    claim.creation_date = input.creation_date;
+    claim.last_update = input.last_update;
+    claim.occurence_date = input.occurence_date;
+    claim.occurent_location = input.occurence_location;
+    claim.notificationDate = input.notification_date;
+    claim.claim_type = input.claim_type;
+    claim.revaluation_reason = input.revaluation_reason;
+    claim.guarantees = new ClaimGuarantees(input.guarantees);
+    claim.product_data = input.product_data;
+
+    return claim;
   }
 }
 

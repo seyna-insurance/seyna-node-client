@@ -2,7 +2,6 @@ import { clientSym } from "../utils";
 import { Seyna } from "..";
 
 export class Settlement {
-  [clientSym]: Seyna;
   portfolio_id: string;
   contract_id: string;
   claim_id: string;
@@ -22,24 +21,25 @@ export class Settlement {
   guarantees: SettlementGuarantees;
   product_data: any;
 
-  constructor(input: any, client: Seyna) {
-    this[clientSym] = client;
-    this.portfolio_id = input.portfolio_id;
-    this.contract_id = input.contract_id;
-    this.claim_id = input.claim_id;
-    this.claim_event_num = input.claim_event_num;
-    this.product_id = input.product_id;
-    this.id = input.id;
-    this.event_num = input.event_num;
-    this.event_type = input.event_type;
-    this.event_date = input.event_date;
-    this.ref = input.ref;
-    this.debug = input.debug;
-    this.payment_date = input.payment_date;
-    this.creation_date = input.creation_date;
-    this.last_update = input.last_update;
-    this.guarantees = new SettlementGuarantees(input.guarantees);
-    this.product_data = input.product_data;
+  static fromInput(input: any): Settlement {
+    let settlement = new Settlement();
+    settlement.portfolio_id = input.portfolio_id;
+    settlement.contract_id = input.contract_id;
+    settlement.claim_id = input.claim_id;
+    settlement.claim_event_num = input.claim_event_num;
+    settlement.product_id = input.product_id;
+    settlement.id = input.id;
+    settlement.event_num = input.event_num;
+    settlement.event_type = input.event_type;
+    settlement.event_date = input.event_date;
+    settlement.ref = input.ref;
+    settlement.debug = input.debug;
+    settlement.payment_date = input.payment_date;
+    settlement.creation_date = input.creation_date;
+    settlement.last_update = input.last_update;
+    settlement.guarantees = new SettlementGuarantees(input.guarantees);
+    settlement.product_data = input.product_data;
+    return settlement;
   }
 }
 

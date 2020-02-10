@@ -2,14 +2,14 @@ import { clientSym } from "../utils";
 import { Seyna } from "..";
 
 export class Error {
-  [clientSym]: Seyna;
   status: number;
   type: string;
   msg: string;
-  constructor(input: any, client: Seyna) {
-    this[clientSym] = client;
-    this.status = input.status;
-    this.type = input.type;
-    this.msg = input.msg;
+  static fromInput(input: any): Error {
+    let error = new Error();
+    error.status = input.status;
+    error.type = input.type;
+    error.msg = input.msg;
+    return error;
   }
 }

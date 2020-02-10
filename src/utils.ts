@@ -25,22 +25,22 @@ export type ParsableObject =
 
 export type Parsable = ParsableObject | List<ParsableObject>;
 
-export const parse = (input: any, client: Seyna): Parsable => {
+export const parse = (input: any): Parsable => {
   switch (input.object) {
     case "claim":
-      return new Claim(input, client);
+      return Claim.fromInput(input);
     case "contract":
-      return new Contract(input, client);
+      return Contract.fromInput(input);
     case "error":
-      return new Error(input, client);
+      return Error.fromInput(input);
     case "list":
-      return new List(input, client);
+      return List.fromInput(input);
     case "portfolio":
-      return new Portfolio(input, client);
+      return Portfolio.fromInput(input);
     case "receipt":
-      return new Receipt(input, client);
+      return Receipt.fromInput(input);
     case "settlement":
-      return new Settlement(input, client);
+      return Settlement.fromInput(input);
     default:
       throw "type not parsable : " + input.object;
   }

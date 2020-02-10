@@ -163,8 +163,6 @@ const entityCreate = (input: any) => {
 };
 
 export class Contract {
-  [clientSym]: Seyna;
-
   portfolio_id: string;
   id: string;
   product_id: string;
@@ -172,7 +170,7 @@ export class Contract {
   event_num: number;
   event_type: "new" | "update" | "cancel";
   event_date: string;
-  
+
   ref: string;
   debug?: string;
 
@@ -195,35 +193,41 @@ export class Contract {
   guarantees: ContractGuarantees;
   product_data: any;
 
-  constructor(input: any, client: Seyna) {
-    this[clientSym] = client;
+  static fromInput(input: any): Contract {
+    let contract = new Contract();
 
-    this.portfolio_id = input.portfolio_id;
-    this.id = input.id;
-    this.product_id = input.product_id;
-    this.event_num = input.event_num;
-    this.event_type = input.event_type;
-    this.event_date = input.event_date;
-    this.ref = input.ref;
-    this.debug = input.debug;
-    this.customer_id = input.customer_id;
-    this.creation_date = input.creation_date;
-    this.last_update = input.last_update;
-    this.subscriber = input.subscriber.map((item: any) => entityCreate(item));
-    this.insured = input.insured.map((item: any) => entityCreate(item));
-    this.beneficiary = input.beneficiary.map((item: any) => entityCreate(item));
-    this.splitting_type = input.splitting_type;
-    this.splitting_fee = input.splitting_fee;
-    this.subscription_date = input.subscription_date;
-    this.issuance_date = input.issuance_date;
-    this.start_cover_date = input.start_cover_date;
-    this.end_cover_date = input.end_cover_date;
-    this.coinsurance = input.coinsurance;
-    this.extra_broker_fee = input.extra_broker_fee;
-    this.cancel_date = input.cancel_date;
-    this.cancel_reason = input.cancel_reason;
-    this.guarantees = ContractGuarantees.fromResponse(input.guarantees);
-    this.product_data = input.product_data;
+    contract.portfolio_id = input.portfolio_id;
+    contract.id = input.id;
+    contract.product_id = input.product_id;
+    contract.event_num = input.event_num;
+    contract.event_type = input.event_type;
+    contract.event_date = input.event_date;
+    contract.ref = input.ref;
+    contract.debug = input.debug;
+    contract.customer_id = input.customer_id;
+    contract.creation_date = input.creation_date;
+    contract.last_update = input.last_update;
+    contract.subscriber = input.subscriber.map((item: any) =>
+      entityCreate(item)
+    );
+    contract.insured = input.insured.map((item: any) => entityCreate(item));
+    contract.beneficiary = input.beneficiary.map((item: any) =>
+      entityCreate(item)
+    );
+    contract.splitting_type = input.splitting_type;
+    contract.splitting_fee = input.splitting_fee;
+    contract.subscription_date = input.subscription_date;
+    contract.issuance_date = input.issuance_date;
+    contract.start_cover_date = input.start_cover_date;
+    contract.end_cover_date = input.end_cover_date;
+    contract.coinsurance = input.coinsurance;
+    contract.extra_broker_fee = input.extra_broker_fee;
+    contract.cancel_date = input.cancel_date;
+    contract.cancel_reason = input.cancel_reason;
+    contract.guarantees = ContractGuarantees.fromResponse(input.guarantees);
+    contract.product_data = input.product_data;
+
+    return contract;
   }
 
   toOutput(): any {

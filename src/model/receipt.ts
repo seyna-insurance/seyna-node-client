@@ -2,7 +2,6 @@ import { clientSym } from "../utils";
 import { Seyna } from "..";
 
 export class Receipt {
-  [clientSym]: Seyna;
   portfolio_dd: string;
   contract_id: string;
   contract_event_num: number;
@@ -25,28 +24,30 @@ export class Receipt {
   guarantees: ReceiptGuarantees;
   product_data: any;
 
-  constructor(input: any, client: Seyna) {
-    this[clientSym] = client;
+  static fromInput(input: any): Receipt {
+    let receipt = new Receipt();
 
-    this.portfolio_dd = input.portfolio_id;
-    this.contract_id = input.contract_id;
-    this.contract_event_num = input.contract_event_num;
-    this.product_id = input.product_id;
-    this.id = input.id;
-    this.event_num = input.event_num;
-    this.event_type = input.event_type;
-    this.event_date = input.event_date;
-    this.ref = input.ref;
-    this.debug = input.debug;
-    this.issuance_date = input.issuance_date;
-    this.due_date = input.due_date;
-    this.payment_date = input.payment_date;
-    this.creation_date = input.creation_date;
-    this.last_update = input.last_update;
-    this.start_cover_date = input.start_cover_date;
-    this.endcover_date = input.end_cover_date;
-    this.guarantees = new ReceiptGuarantees(input.guarantees);
-    this.product_data = input.product_data;
+    receipt.portfolio_dd = input.portfolio_id;
+    receipt.contract_id = input.contract_id;
+    receipt.contract_event_num = input.contract_event_num;
+    receipt.product_id = input.product_id;
+    receipt.id = input.id;
+    receipt.event_num = input.event_num;
+    receipt.event_type = input.event_type;
+    receipt.event_date = input.event_date;
+    receipt.ref = input.ref;
+    receipt.debug = input.debug;
+    receipt.issuance_date = input.issuance_date;
+    receipt.due_date = input.due_date;
+    receipt.payment_date = input.payment_date;
+    receipt.creation_date = input.creation_date;
+    receipt.last_update = input.last_update;
+    receipt.start_cover_date = input.start_cover_date;
+    receipt.endcover_date = input.end_cover_date;
+    receipt.guarantees = new ReceiptGuarantees(input.guarantees);
+    receipt.product_data = input.product_data;
+
+    return receipt;
   }
 }
 
