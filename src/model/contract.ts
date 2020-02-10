@@ -76,16 +76,14 @@ export class ContractGuarantee {
   }
 }
 
-export interface EntityIndividual {
-  type: "individual";
+export class EntityIndividual {
+  type: "individual" = "individual";
   name: string;
   address: string;
   email: string;
   phone: string;
   birthday: string;
-}
 
-export class EntityIndividual {
   static fromInput(input: any): EntityIndividual {
     let entitiy = new EntityIndividual();
 
@@ -98,23 +96,10 @@ export class EntityIndividual {
 
     return entitiy;
   }
-
-  toOutput(): any {
-    let output: any = {};
-
-    output.type = this.type;
-    output.name = this.name;
-    output.address = this.address;
-    output.email = this.email;
-    output.phone = this.phone;
-    output.birthday = this.birthday;
-
-    return output;
-  }
 }
 
-export class EntityCorporate {
-  type: "company" | "nonprofit";
+export class EntityCompany {
+  type: "company" = "company";
   name: string;
   registration: string;
   representative: string;
@@ -122,8 +107,8 @@ export class EntityCorporate {
   email: string;
   phone: string;
   birthday: string;
-  static fromInput(input: any): EntityCorporate {
-    let entity = new EntityCorporate();
+  static fromInput(input: any): EntityCompany {
+    let entity = new EntityCompany();
     entity.type = input.type;
     entity.name = input.name;
     entity.registration = input.registration;
@@ -134,32 +119,41 @@ export class EntityCorporate {
     entity.birthday = input.birthday;
     return entity;
   }
+}
 
-  toOutput(): any {
-    let output: any = {};
-
-    output.type = this.type;
-    output.name = this.name;
-    output.registration = this.registration;
-    output.representative = this.representative;
-    output.address = this.address;
-    output.email = this.email;
-    output.phone = this.phone;
-    output.birthday = this.birthday;
-
-    return output;
+export class EntityNonProfit {
+  type: "nonprofit" = "nonprofit";
+  name: string;
+  registration: string;
+  representative: string;
+  address: string;
+  email: string;
+  phone: string;
+  birthday: string;
+  static fromInput(input: any): EntityCompany {
+    let entity = new EntityCompany();
+    entity.type = input.type;
+    entity.name = input.name;
+    entity.registration = input.registration;
+    entity.representative = input.representative;
+    entity.address = input.address;
+    entity.email = input.email;
+    entity.phone = input.phone;
+    entity.birthday = input.birthday;
+    return entity;
   }
 }
 
-export type Entity = EntityIndividual | EntityCorporate;
+export type Entity = EntityIndividual | EntityCompany | EntityNonProfit;
 
 const entityCreate = (input: any) => {
   switch (input.type) {
     case "individual":
       return EntityIndividual.fromInput(input);
     case "company":
+      return EntityCompany.fromInput(input);
     case "nonprofit":
-      return EntityCorporate.fromInput(input);
+      return EntityNonProfit.fromInput(input);
   }
 };
 

@@ -6,7 +6,8 @@ import {
   ContractGuarantee,
   ContractGuarantees,
   EntityIndividual,
-  EntityCorporate
+  EntityCompany,
+  EntityNonProfit
 } from "./model/contract";
 import { Error } from "./model/error";
 import { Receipt, ReceiptGuarantee, ReceiptGuarantees } from "./model/receipt";
@@ -28,7 +29,8 @@ export {
   ContractGuarantee,
   ContractGuarantees,
   EntityIndividual,
-  EntityCorporate,
+  EntityCompany,
+  EntityNonProfit,
   Error,
   List,
   Portfolio,
