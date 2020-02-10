@@ -3,22 +3,29 @@ import { stringify } from "querystring";
 
 import {
   Contract,
+  ContractGuarantee,
   ContractGuarantees,
   EntityIndividual,
   EntityCorporate
 } from "./model/contract";
 import { Error } from "./model/error";
-import { Receipt, ReceiptGuarantees } from "./model/receipt";
-import { Claim, ClaimGuarantees } from "./model/claim";
-import { Settlement, SettlementGuarantees } from "./model/settlement";
+import { Receipt, ReceiptGuarantee, ReceiptGuarantees } from "./model/receipt";
+import { Claim, ClaimGuarantee, ClaimGuarantees } from "./model/claim";
+import {
+  Settlement,
+  SettlementGuarantee,
+  SettlementGuarantees
+} from "./model/settlement";
 import { Portfolio } from "./model/portfolio";
 import { List } from "./model/list";
 import { objectIsEmpty, ListOptions } from "./utils";
 
 export {
   Claim,
+  ClaimGuarantee,
   ClaimGuarantees,
   Contract,
+  ContractGuarantee,
   ContractGuarantees,
   EntityIndividual,
   EntityCorporate,
@@ -26,8 +33,10 @@ export {
   List,
   Portfolio,
   Receipt,
+  ReceiptGuarantee,
   ReceiptGuarantees,
   Settlement,
+  SettlementGuarantee,
   SettlementGuarantees
 };
 
