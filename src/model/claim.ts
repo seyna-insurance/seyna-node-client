@@ -4,7 +4,7 @@ export class Claim {
   product_id: string;
   id: string;
   event_num: number;
-  event_type: "new" | "revaluation" | "payment" | "closed";
+  event_type: "new" | "revaluation" | "payment" | "close";
   event_date: string;
   ref: string;
   debug?: string;
