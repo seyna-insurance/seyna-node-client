@@ -1,4 +1,4 @@
-import fetch from "node-fetch";
+import fetch, { Headers } from "node-fetch";
 import { stringify } from "querystring";
 
 import { Contract, ContractGuarantees } from "./model/contract";
@@ -13,12 +13,12 @@ import { objectIsEmpty, ListOptions } from "./utils";
 export {
   Claim,
   ClaimGuarantees,
-  Contract,
+  Claim as Contract,
   ContractGuarantees,
   Error,
   List,
   Portfolio,
-  Receipt,
+  Claim as Receipt,
   ReceiptGuarantees,
   Settlement,
   SettlementGuarantees
@@ -33,13 +33,19 @@ export class Seyna {
     this.apiSecret = options.apiSecret;
   }
 
-  private async sendRequest(method: string, path: string, body?: any) {
+  private async sendRequest(method: string, path: string, input?: any) {
     let url = this.baseUrl + path;
-    let headers: { [key: string]: string } = {};
-    headers["Accept"] = "application/json";
-    headers["API-Key"] = this.apiKey + ":" + this.apiSecret;
-    if (body) headers["Contet-Type"] = "application/json";
-    let response = await fetch(url, { headers });
+
+    // Set request headers
+    let headers: Headers = new Headers();
+    headers.set("Accept", "application/json");
+    headers.set("API-Key", `${this.apiKey}:${this.apiSecret}`);
+    if (input) headers.set("Content-Type", "application/json");
+
+    // Set request body
+    let body = input ? JSON.stringify(input) : undefined;
+
+    let response = await fetch(url, { headers, body });
     let data = await response.json();
     if (response.status > 299) {
       throw new Error(data, this);
@@ -48,8 +54,8 @@ export class Seyna {
     }
   }
 
-  async getPortfolio(portfolioId: string): Promise<Portfolio> {
-    let body = await this.sendRequest("GET", "/portfolios/" + portfolioId);
+  async getPortfolio(portfolio_id: string): Promise<Portfolio> {
+    let body = await this.sendRequest("GET", "/portfolios/" + portfolio_id);
     return new Portfolio(body, this);
   }
 
@@ -70,27 +76,42 @@ export class Seyna {
     } while (options.from);
   }
 
-  async getContract(contractId: string): Promise<Contract> {
-    let body = await this.sendRequest("GET", "/contracts/" + contractId);
+  async getContract(contract_id: string): Promise<Claim> {
+    let body = await this.sendRequest("GET", "/contracts/" + contract_id);
+    return new Claim(body, this);
+  }
+
+  async createContract(contract: Contract): Promise<Contract> {
+    let url = "/contracts";
+    let body = await this.sendRequest("POST", url, contract);
+    return new Contract(body, this);
+  }
+
+  async updateContract(contract: Contract): Promise<Contract> {
+    let url = `/contracts/${contract.id}`;
+    let body = await this.sendRequest("PUT", url, contract);
     return new Contract(body, this);
   }
 
   async listContracts(
-    portfolioId: string,
+    portfolio_id: string,
     options: ListOptions = {}
   ): Promise<List<Contract>> {
-    let url = "/portfolios/" + portfolioId + "/contracts";
+    let url = "/portfolios/" + portfolio_id + "/contracts";
     if (!objectIsEmpty(options)) url += "?" + stringify(options);
     let data = await this.sendRequest("GET", url);
     return new List<Contract>(data, this);
   }
 
   async *iterContracts(
-    portfolioId: string,
+    portfolio_id: string,
     options: ListOptions = {}
   ): AsyncGenerator<Contract> {
     do {
-      let page: List<Contract> = await this.listContracts(portfolioId, options);
+      let page: List<Contract> = await this.listContracts(
+        portfolio_id,
+        options
+      );
       options.from = page.next;
       for (let i = 0; i < page.data.length; ++i) {
         yield page.data[i];
@@ -99,22 +120,22 @@ export class Seyna {
   }
 
   async listContractVersions(
-    portfolioId: string,
+    portfolio_id: string,
     options: ListOptions = {}
   ): Promise<List<Contract>> {
-    let url = "/portfolios/" + portfolioId + "/contract-versions";
+    let url = "/portfolios/" + portfolio_id + "/contract-versions";
     if (!objectIsEmpty(options)) url += "?" + stringify(options);
     let data = await this.sendRequest("GET", url);
     return new List<Contract>(data, this);
   }
 
   async *iterContractVersions(
-    portfolioId: string,
+    portfolio_id: string,
     options: ListOptions = {}
   ): AsyncGenerator<Contract> {
     do {
       let page: List<Contract> = await this.listContractVersions(
-        portfolioId,
+        portfolio_id,
         options
       );
       options.from = page.next;
@@ -124,27 +145,39 @@ export class Seyna {
     } while (options.from);
   }
 
-  async getReceipt(contractId: string): Promise<Receipt> {
-    let body = await this.sendRequest("GET", "/receipts/" + contractId);
+  async getReceipt(contract_id: string): Promise<Claim> {
+    let body = await this.sendRequest("GET", "/receipts/" + contract_id);
+    return new Claim(body, this);
+  }
+
+  async createReceipt(receipt: Receipt) {
+    let url = "/receipts";
+    let body = await this.sendRequest("POST", url, receipt);
+    return new Receipt(body, this);
+  }
+
+  async updateReceipt(receipt: Receipt) {
+    let url = `/receipts/${receipt.id}`;
+    let body = await this.sendRequest("PUT", url, receipt);
     return new Receipt(body, this);
   }
 
   async listReceipts(
-    portfolioId: string,
+    portfolio_id: string,
     options: ListOptions = {}
   ): Promise<List<Receipt>> {
-    let url = "/portfolios/" + portfolioId + "/receipts";
+    let url = "/portfolios/" + portfolio_id + "/receipts";
     if (!objectIsEmpty(options)) url += "?" + stringify(options);
     let data = await this.sendRequest("GET", url);
     return new List<Receipt>(data, this);
   }
 
   async *iterReceipts(
-    portfolioId: string,
+    portfolio_id: string,
     options: ListOptions = {}
   ): AsyncGenerator<Receipt> {
     do {
-      let page: List<Receipt> = await this.listReceipts(portfolioId, options);
+      let page: List<Receipt> = await this.listReceipts(portfolio_id, options);
       options.from = page.next;
       for (let i = 0; i < page.data.length; ++i) {
         yield page.data[i];
@@ -153,22 +186,22 @@ export class Seyna {
   }
 
   async listReceiptVersions(
-    portfolioId: string,
+    portfolio_id: string,
     options: ListOptions = {}
   ): Promise<List<Receipt>> {
-    let url = "/portfolios/" + portfolioId + "/receipt-versions";
+    let url = "/portfolios/" + portfolio_id + "/receipt-versions";
     if (!objectIsEmpty(options)) url += "?" + stringify(options);
     let data = await this.sendRequest("GET", url);
     return new List<Receipt>(data, this);
   }
 
   async *iterReceiptVersions(
-    portfolioId: string,
+    portfolio_id: string,
     options: ListOptions = {}
   ): AsyncGenerator<Receipt> {
     do {
       let page: List<Receipt> = await this.listReceiptVersions(
-        portfolioId,
+        portfolio_id,
         options
       );
       options.from = page.next;
@@ -178,27 +211,39 @@ export class Seyna {
     } while (options.from);
   }
 
-  async getClaim(contractId: string): Promise<Claim> {
-    let body = await this.sendRequest("GET", "/claims/" + contractId);
+  async getClaim(claim_id: string): Promise<Claim> {
+    let body = await this.sendRequest("GET", "/claims/" + claim_id);
+    return new Claim(body, this);
+  }
+
+  async createClaim(claim: Claim): Promise<Claim> {
+    let url = "/claims";
+    let body = await this.sendRequest("POST", url, claim);
+    return new Claim(body, this);
+  }
+
+  async updateClaim(claim: Claim): Promise<Claim> {
+    let url = `/claims/${claim.id}`;
+    let body = await this.sendRequest("PUT", url, claim);
     return new Claim(body, this);
   }
 
   async listClaims(
-    portfolioId: string,
+    portfolio_id: string,
     options: ListOptions = {}
   ): Promise<List<Claim>> {
-    let url = "/portfolios/" + portfolioId + "/claims";
+    let url = "/portfolios/" + portfolio_id + "/claims";
     if (!objectIsEmpty(options)) url += "?" + stringify(options);
     let data = await this.sendRequest("GET", url);
     return new List<Claim>(data, this);
   }
 
   async *iterClaims(
-    portfolioId: string,
+    portfolio_id: string,
     options: ListOptions = {}
   ): AsyncGenerator<Claim> {
     do {
-      let page: List<Claim> = await this.listClaims(portfolioId, options);
+      let page: List<Claim> = await this.listClaims(portfolio_id, options);
       options.from = page.next;
       for (let i = 0; i < page.data.length; ++i) {
         yield page.data[i];
@@ -207,22 +252,22 @@ export class Seyna {
   }
 
   async listClaimVersions(
-    portfolioId: string,
+    portfolio_id: string,
     options: ListOptions = {}
   ): Promise<List<Claim>> {
-    let url = "/portfolios/" + portfolioId + "/claim-versions";
+    let url = "/portfolios/" + portfolio_id + "/claim-versions";
     if (!objectIsEmpty(options)) url += "?" + stringify(options);
     let data = await this.sendRequest("GET", url);
     return new List<Claim>(data, this);
   }
 
   async *iterClaimVersions(
-    portfolioId: string,
+    portfolio_id: string,
     options: ListOptions = {}
   ): AsyncGenerator<Claim> {
     do {
       let page: List<Claim> = await this.listClaimVersions(
-        portfolioId,
+        portfolio_id,
         options
       );
       options.from = page.next;
@@ -237,23 +282,35 @@ export class Seyna {
     return new Settlement(body, this);
   }
 
+  async createSettlement(settlement: Settlement) {
+    let url = "/settlements";
+    let body = await this.sendRequest("POST", url, settlement);
+    return new Settlement(body, this);
+  }
+
+  async updateSettlement(settlement: Settlement) {
+    let url = `/settlements/${settlement.id}`;
+    let body = await this.sendRequest("PUT", url, settlement);
+    return new Settlement(body, this);
+  }
+
   async listSettlements(
-    portfolioId: string,
+    portfolio_id: string,
     options: ListOptions = {}
   ): Promise<List<Settlement>> {
-    let url = "/portfolios/" + portfolioId + "/settlements";
+    let url = "/portfolios/" + portfolio_id + "/settlements";
     if (!objectIsEmpty(options)) url += "?" + stringify(options);
     let data = await this.sendRequest("GET", url);
     return new List<Settlement>(data, this);
   }
 
   async *iterSettlements(
-    portfolioId: string,
+    portfolio_id: string,
     options: ListOptions = {}
   ): AsyncGenerator<Settlement> {
     do {
       let page: List<Settlement> = await this.listSettlements(
-        portfolioId,
+        portfolio_id,
         options
       );
       options.from = page.next;
@@ -264,22 +321,22 @@ export class Seyna {
   }
 
   async listSettlementVersions(
-    portfolioId: string,
+    portfolio_id: string,
     options: ListOptions = {}
   ): Promise<List<Settlement>> {
-    let url = "/portfolios/" + portfolioId + "/settlement-versions";
+    let url = "/portfolios/" + portfolio_id + "/settlement-versions";
     if (!objectIsEmpty(options)) url += "?" + stringify(options);
     let data = await this.sendRequest("GET", url);
     return new List<Settlement>(data, this);
   }
 
   async *iterSettlementVersions(
-    portfolioId: string,
+    portfolio_id: string,
     options: ListOptions = {}
   ): AsyncGenerator<Settlement> {
     do {
       let page: List<Settlement> = await this.listSettlementVersions(
-        portfolioId,
+        portfolio_id,
         options
       );
       options.from = page.next;

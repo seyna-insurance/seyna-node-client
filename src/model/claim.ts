@@ -4,45 +4,45 @@ import { Seyna } from "..";
 export class Claim {
   [clientSym]: Seyna;
 
-  portfolioId: string;
-  contractId: string;
-  productId: string;
+  portfolio_id: string;
+  contract_id: string;
+  product_id: string;
   id: string;
-  eventNum: number;
-  eventType: "new" | "revaluation" | "payment" | "closed";
-  eventDate: string;
+  event_num: number;
+  event_type: "new" | "revaluation" | "payment" | "closed";
+  event_date: string;
   ref: string;
   debug?: string;
-  creationDate: string;
-  lastUpdate: string;
-  occurenceDate: string;
-  occurentLocation: string;
+  creation_date: string;
+  last_update: string;
+  occurence_date: string;
+  occurent_location: string;
   notificationDate: string;
-  claimType: string;
-  revaluationReason?: string;
+  claim_type: string;
+  revaluation_reason?: string;
   guarantees: ClaimGuarantees;
-  productData: any;
+  product_data: any;
 
   constructor(input: any, client: Seyna) {
     this[clientSym] = client;
 
-    this.portfolioId = input.portfolio_id;
-    this.contractId = input.contract_id;
-    this.productId = input.product_id;
+    this.portfolio_id = input.portfolio_id;
+    this.contract_id = input.contract_id;
+    this.product_id = input.product_id;
     this.id = input.id;
-    this.eventNum = input.event_num;
-    this.eventType = input.event_type;
-    this.eventDate = input.event_date;
+    this.event_num = input.event_num;
+    this.event_type = input.event_type;
+    this.event_date = input.event_date;
     this.ref = input.ref;
-    this.creationDate = input.creation_date;
-    this.lastUpdate = input.last_update;
-    this.occurenceDate = input.occurence_date;
-    this.occurentLocation = input.occurence_location;
+    this.creation_date = input.creation_date;
+    this.last_update = input.last_update;
+    this.occurence_date = input.occurence_date;
+    this.occurent_location = input.occurence_location;
     this.notificationDate = input.notification_date;
-    this.claimType = input.claim_type;
-    this.revaluationReason = input.revaluation_reason;
+    this.claim_type = input.claim_type;
+    this.revaluation_reason = input.revaluation_reason;
     this.guarantees = new ClaimGuarantees(input.guarantees);
-    this.productData = input.product_data;
+    this.product_data = input.product_data;
   }
 }
 
@@ -75,19 +75,19 @@ export class ClaimGuarantee {
   fguClaim: number = 0;
   paid: number = 0;
   outstanding: number = 0;
-  managementPaid: number = 0;
-  managementOutstanding: number = 0;
-  subrogationPaid: number = 0;
-  subrogationOutstanding: number = 0;
+  management_paid: number = 0;
+  management_outstanding: number = 0;
+  subrogation_paid: number = 0;
+  subrogation_outstanding: number = 0;
   static fromResponse(input: any): ClaimGuarantee {
     let result = new ClaimGuarantee();
     result.fguClaim = input.fgu_claim;
     result.paid = input.paid;
     result.outstanding = input.outstanding;
-    result.managementPaid = input.management_paid;
-    result.managementOutstanding = input.management_outstanding;
-    result.subrogationPaid = input.subrogation_paid;
-    result.subrogationOutstanding = input.subrogation_outstanding;
+    result.management_paid = input.management_paid;
+    result.management_outstanding = input.management_outstanding;
+    result.subrogation_paid = input.subrogation_paid;
+    result.subrogation_outstanding = input.subrogation_outstanding;
     return result;
   }
   plus(value: ClaimGuarantee): ClaimGuarantee {
@@ -95,12 +95,12 @@ export class ClaimGuarantee {
     result.fguClaim = this.fguClaim + value.fguClaim;
     result.outstanding = this.outstanding + value.outstanding;
     result.paid = this.paid + value.paid;
-    result.managementOutstanding =
-      this.managementOutstanding + value.managementOutstanding;
-    result.managementPaid = this.managementPaid + value.managementPaid;
-    result.subrogationOutstanding =
-      this.subrogationOutstanding + value.subrogationOutstanding;
-    result.subrogationPaid = this.subrogationPaid + value.subrogationPaid;
+    result.management_outstanding =
+      this.management_outstanding + value.management_outstanding;
+    result.management_paid = this.management_paid + value.management_paid;
+    result.subrogation_outstanding =
+      this.subrogation_outstanding + value.subrogation_outstanding;
+    result.subrogation_paid = this.subrogation_paid + value.subrogation_paid;
     return result;
   }
 }
