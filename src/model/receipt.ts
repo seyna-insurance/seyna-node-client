@@ -44,7 +44,7 @@ export class Receipt {
     receipt.last_update = input.last_update;
     receipt.start_cover_date = input.start_cover_date;
     receipt.endcover_date = input.end_cover_date;
-    receipt.guarantees = new ReceiptGuarantees(input.guarantees);
+    receipt.guarantees = ReceiptGuarantees.fromInput(input.guarantees);
     receipt.product_data = input.product_data;
 
     return receipt;
@@ -52,14 +52,19 @@ export class Receipt {
 }
 
 export class ReceiptGuarantees {
-  data: { [guarantee: string]: ReceiptGuarantee };
-  constructor(input: any) {
-    this.data = Object.fromEntries(
-      Object.entries(input).map(([guarantee, value]) => [
-        guarantee,
-        ReceiptGuarantee.fromResponse(value)
-      ])
-    );
+  data: { [guarantee: string]: ReceiptGuarantee } = {};
+  static fromInput(input: any): ReceiptGuarantees {
+    let guarantees = new ReceiptGuarantees();
+    Object.entries(input).forEach(([guarantee_name, guarantee_data]) => {
+      guarantees.addGuarantee(
+        guarantee_name,
+        ReceiptGuarantee.fromInput(guarantee_data)
+      );
+    });
+    return guarantees;
+  }
+  addGuarantee(guarantee_name: string, guarantee_data: ReceiptGuarantee) {
+    this.data[guarantee_name] = guarantee_data;
   }
   sum(): ReceiptGuarantee {
     return Object.entries(this.data)
@@ -80,7 +85,7 @@ export class ReceiptGuarantee {
   discount: number = 0;
   broker_fee: number = 0;
   cost_acquisition: number = 0;
-  static fromResponse(input: any) {
+  static fromInput(input: any): ReceiptGuarantee {
     let result = new ReceiptGuarantee();
     result.premium = input.premium;
     result.tax = input.tax;

@@ -1,6 +1,3 @@
-import { clientSym } from "../utils";
-import { Seyna } from "..";
-
 export class Settlement {
   portfolio_id: string;
   contract_id: string;
@@ -37,7 +34,7 @@ export class Settlement {
     settlement.payment_date = input.payment_date;
     settlement.creation_date = input.creation_date;
     settlement.last_update = input.last_update;
-    settlement.guarantees = new SettlementGuarantees(input.guarantees);
+    settlement.guarantees = SettlementGuarantees.fromInput(input.guarantees);
     settlement.product_data = input.product_data;
     return settlement;
   }
@@ -45,17 +42,24 @@ export class Settlement {
 
 export class SettlementGuarantees {
   data: { [guarantee: string]: SettlementGuarantee };
-  constructor(input: any) {
-    this.data = Object.fromEntries(
-      Object.entries(input).map(([guarantee, value]) => [
-        guarantee,
-        SettlementGuarantee.fromResponse(value)
-      ])
+  static fromInput(input: any): SettlementGuarantees {
+    let guarantees = new SettlementGuarantees();
+    Object.entries(input).forEach(([guarantee_name, guarantee_data]) =>
+      guarantees.addGuarantee(
+        guarantee_name,
+        SettlementGuarantee.fromInput(guarantee_data)
+      )
     );
+    return guarantees;
   }
+
+  addGuarantee(guarantee_name: string, guarantee_data: SettlementGuarantee) {
+    this.data[guarantee_name] = guarantee_data;
+  }
+
   sum(): SettlementGuarantee {
-    return Object.entries(this.data)
-      .map(([guarantee, value]) => value)
+    return Object.values(this.data)
+      .map(value => value)
       .reduce(
         (previous, current) => previous.plus(current),
         new SettlementGuarantee()
@@ -71,7 +75,7 @@ export class SettlementGuarantee {
   management_paid: number = 0;
   subrogation_paid: number = 0;
 
-  static fromResponse(input: any) {
+  static fromInput(input: any) {
     let result = new SettlementGuarantee();
     result.paid = input.paid;
     result.management_paid = input.management_paid;

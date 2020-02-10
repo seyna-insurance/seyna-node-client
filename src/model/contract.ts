@@ -4,15 +4,19 @@ import { Seyna } from "..";
 export class ContractGuarantees {
   data: { [guarantee: string]: ContractGuarantee } = {};
 
-  static fromResponse(input: any): ContractGuarantees {
+  static fromInput(input: any): ContractGuarantees {
     let result = new ContractGuarantees();
-    result.data = Object.fromEntries(
-      Object.entries(input).map(([guarantee, value]) => [
-        guarantee,
-        ContractGuarantee.fromInput(value)
-      ])
+    Object.entries(input).forEach(([guarantee_name, guarantee_data]) =>
+      result.addGuarantee(
+        guarantee_name,
+        ContractGuarantee.fromInput(guarantee_data)
+      )
     );
     return result;
+  }
+
+  addGuarantee(guarantee_name: string, guarantee_data: ContractGuarantee) {
+    this.data[guarantee_name] = ContractGuarantee.fromInput(guarantee_data);
   }
 
   sum(): ContractGuarantee {
@@ -177,9 +181,9 @@ export class Contract {
   customer_id: string;
   creation_date: string;
   last_update: string;
-  subscriber: Entity[];
-  insured: Entity[];
-  beneficiary: Entity[];
+  subscriber: Entity[] = [];
+  insured: Entity[] = [];
+  beneficiary: Entity[] = [];
   splitting_type?: string;
   splitting_fee?: number;
   subscription_date: string;
@@ -224,10 +228,22 @@ export class Contract {
     contract.extra_broker_fee = input.extra_broker_fee;
     contract.cancel_date = input.cancel_date;
     contract.cancel_reason = input.cancel_reason;
-    contract.guarantees = ContractGuarantees.fromResponse(input.guarantees);
+    contract.guarantees = ContractGuarantees.fromInput(input.guarantees);
     contract.product_data = input.product_data;
 
     return contract;
+  }
+
+  addSubscriber(entitiy: Entity) {
+    this.subscriber.push(entitiy);
+  }
+
+  addInsured(entitiy: Entity) {
+    this.insured.push(entitiy);
+  }
+
+  addBeneficiary(entitiy: Entity) {
+    this.beneficiary.push(entitiy);
   }
 
   toOutput(): any {

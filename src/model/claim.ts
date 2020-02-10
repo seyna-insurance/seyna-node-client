@@ -1,6 +1,3 @@
-import { clientSym } from "../utils";
-import { Seyna, Contract } from "..";
-
 export class Claim {
   portfolio_id: string;
   contract_id: string;
@@ -39,7 +36,7 @@ export class Claim {
     claim.notificationDate = input.notification_date;
     claim.claim_type = input.claim_type;
     claim.revaluation_reason = input.revaluation_reason;
-    claim.guarantees = new ClaimGuarantees(input.guarantees);
+    claim.guarantees = ClaimGuarantees.fromInput(input.guarantees);
     claim.product_data = input.product_data;
 
     return claim;
@@ -47,14 +44,21 @@ export class Claim {
 }
 
 export class ClaimGuarantees {
-  data: { [guarantee: string]: ClaimGuarantee };
-  constructor(input: any) {
-    this.data = Object.fromEntries(
-      Object.entries(input).map(([guarantee, value]) => [
-        guarantee,
-        ClaimGuarantee.fromResponse(value)
-      ])
+  data: { [guarantee: string]: ClaimGuarantee } = {};
+  static fromInput(input: any): ClaimGuarantees {
+    let guarantees = new ClaimGuarantees();
+    Object.entries(input).forEach(([guarantee_name, guarantee_data]) =>
+      guarantees.addGuarantee(
+        guarantee_name,
+        ClaimGuarantee.fromInput(guarantee_data)
+      )
     );
+
+    return guarantees;
+  }
+
+  addGuarantee(guarantee_name: string, guarantee_data: ClaimGuarantee) {
+    this.data[guarantee_name] = guarantee_data;
   }
 
   sum(): ClaimGuarantee {
@@ -79,7 +83,7 @@ export class ClaimGuarantee {
   management_outstanding: number = 0;
   subrogation_paid: number = 0;
   subrogation_outstanding: number = 0;
-  static fromResponse(input: any): ClaimGuarantee {
+  static fromInput(input: any): ClaimGuarantee {
     let result = new ClaimGuarantee();
     result.fguClaim = input.fgu_claim;
     result.paid = input.paid;

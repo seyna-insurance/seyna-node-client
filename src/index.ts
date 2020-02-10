@@ -1,7 +1,12 @@
 import fetch, { Headers } from "node-fetch";
 import { stringify } from "querystring";
 
-import { Contract, ContractGuarantees } from "./model/contract";
+import {
+  Contract,
+  ContractGuarantees,
+  EntityIndividual,
+  EntityCorporate
+} from "./model/contract";
 import { Error } from "./model/error";
 import { Receipt, ReceiptGuarantees } from "./model/receipt";
 import { Claim, ClaimGuarantees } from "./model/claim";
@@ -15,6 +20,8 @@ export {
   ClaimGuarantees,
   Contract,
   ContractGuarantees,
+  EntityIndividual,
+  EntityCorporate,
   Error,
   List,
   Portfolio,
