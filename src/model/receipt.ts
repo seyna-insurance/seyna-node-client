@@ -20,7 +20,7 @@ export class Receipt {
   creation_date: string;
   last_update: string;
   start_cover_date: string;
-  endcover_date: string;
+  end_cover_date: string;
   guarantees: ReceiptGuarantees = new ReceiptGuarantees();
   product_data: any;
 
@@ -43,7 +43,7 @@ export class Receipt {
     receipt.creation_date = input.creation_date;
     receipt.last_update = input.last_update;
     receipt.start_cover_date = input.start_cover_date;
-    receipt.endcover_date = input.end_cover_date;
+    receipt.end_cover_date = input.end_cover_date;
     receipt.guarantees = ReceiptGuarantees.fromInput(input.guarantees);
     receipt.product_data = input.product_data;
 
