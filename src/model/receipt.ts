@@ -8,9 +8,11 @@ export class Receipt {
   contract_event_num: number;
   product_id: string;
   id: string;
+
   event_num: number;
-  event_type: string;
+  event_type: "new" | "update" | "paid" | "overdue";
   event_date: string;
+
   ref: string;
   debug?: string;
   issuance_date: string;

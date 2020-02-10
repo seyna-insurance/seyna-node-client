@@ -170,9 +170,9 @@ export class Contract {
   product_id: string;
 
   event_num: number;
-  event_type: string;
+  event_type: "new" | "update" | "cancel";
   event_date: string;
-
+  
   ref: string;
   debug?: string;
 
