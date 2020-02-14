@@ -80,7 +80,7 @@ export class ClaimGuarantees {
 }
 
 export class ClaimGuarantee {
-  fguClaim: number = 0;
+  fgu_claim: number = 0;
   paid: number = 0;
   outstanding: number = 0;
   management_paid: number = 0;
@@ -89,7 +89,7 @@ export class ClaimGuarantee {
   subrogation_outstanding: number = 0;
   static fromInput(input: any): ClaimGuarantee {
     let result = new ClaimGuarantee();
-    result.fguClaim = input.fgu_claim;
+    result.fgu_claim = input.fgu_claim;
     result.paid = input.paid;
     result.outstanding = input.outstanding;
     result.management_paid = input.management_paid;
@@ -100,7 +100,7 @@ export class ClaimGuarantee {
   }
   plus(value: ClaimGuarantee): ClaimGuarantee {
     let result = new ClaimGuarantee();
-    result.fguClaim = this.fguClaim + value.fguClaim;
+    result.fgu_claim = this.fgu_claim + value.fgu_claim;
     result.outstanding = this.outstanding + value.outstanding;
     result.paid = this.paid + value.paid;
     result.management_outstanding =
