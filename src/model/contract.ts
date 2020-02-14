@@ -34,16 +34,16 @@ export class ContractGuarantee {
   premium: number = 0;
   tax: number = 0;
   discount: number = 0;
-  brokerFee: number = 0;
-  costAcquisition: number = 0;
+  broker_fee: number = 0;
+  cost_acquisition: number = 0;
 
   static fromInput(input: any): ContractGuarantee {
     let result = new ContractGuarantee();
     result.premium = input.premium;
     result.tax = input.tax;
     result.discount = input.discount;
-    result.brokerFee = input.broker_fee;
-    result.costAcquisition = input.cost_acquisition;
+    result.broker_fee = input.broker_fee;
+    result.cost_acquisition = input.cost_acquisition;
     return result;
   }
 
@@ -52,8 +52,8 @@ export class ContractGuarantee {
     result.premium = this.premium + value.premium;
     result.tax = this.tax + value.tax;
     result.discount = this.discount + value.discount;
-    result.brokerFee = this.brokerFee + value.brokerFee;
-    result.costAcquisition = this.costAcquisition + value.costAcquisition;
+    result.broker_fee = this.broker_fee + value.broker_fee;
+    result.cost_acquisition = this.cost_acquisition + value.cost_acquisition;
     return result;
   }
 
@@ -63,8 +63,8 @@ export class ContractGuarantee {
     output.premium = this.premium;
     output.tax = this.tax;
     output.discount = this.discount;
-    output.broker_fee = this.brokerFee;
-    output.cost_acquisition = this.costAcquisition;
+    output.broker_fee = this.broker_fee;
+    output.cost_acquisition = this.cost_acquisition;
 
     return output;
   }
