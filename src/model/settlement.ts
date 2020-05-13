@@ -2,16 +2,13 @@ export class Settlement {
   portfolio_id: string;
   contract_id: string;
   claim_id: string;
-  claim_event_num: number;
   product_id: string;
   id: string;
 
-  event_num: number;
-  event_type: "new";
-  event_date: string;
+  version?: number;
+  timestamp: string;
 
-  ref: string;
-  debug?: string;
+  reference: string;
   payment_date: string;
   creation_date: string;
   last_update: string;
@@ -23,14 +20,11 @@ export class Settlement {
     settlement.portfolio_id = input.portfolio_id;
     settlement.contract_id = input.contract_id;
     settlement.claim_id = input.claim_id;
-    settlement.claim_event_num = input.claim_event_num;
     settlement.product_id = input.product_id;
     settlement.id = input.id;
-    settlement.event_num = input.event_num;
-    settlement.event_type = input.event_type;
-    settlement.event_date = input.event_date;
-    settlement.ref = input.ref;
-    settlement.debug = input.debug;
+    settlement.version = input.version;
+    settlement.timestamp = input.timestamp;
+    settlement.reference = input.reference;
     settlement.payment_date = input.payment_date;
     settlement.creation_date = input.creation_date;
     settlement.last_update = input.last_update;
@@ -63,7 +57,7 @@ export class SettlementGuarantees {
 
   sum(): SettlementGuarantee {
     return Object.values(this.data)
-      .map(value => value)
+      .map((value) => value)
       .reduce(
         (previous, current) => previous.plus(current),
         new SettlementGuarantee()

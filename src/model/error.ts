@@ -1,6 +1,3 @@
-import { clientSym } from "../utils";
-import { Seyna } from "..";
-
 export class Error {
   status: number;
   type: string;

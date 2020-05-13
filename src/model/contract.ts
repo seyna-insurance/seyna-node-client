@@ -36,6 +36,7 @@ export class ContractGuarantee {
   discount: number = 0;
   broker_fee: number = 0;
   cost_acquisition: number = 0;
+  cancel_premium: number = 0;
 
   static fromInput(input: any): ContractGuarantee {
     let result = new ContractGuarantee();
@@ -44,6 +45,7 @@ export class ContractGuarantee {
     result.discount = input.discount;
     result.broker_fee = input.broker_fee;
     result.cost_acquisition = input.cost_acquisition;
+    result.cancel_premium = input.cancel_premium;
     return result;
   }
 
@@ -54,6 +56,7 @@ export class ContractGuarantee {
     result.discount = this.discount + value.discount;
     result.broker_fee = this.broker_fee + value.broker_fee;
     result.cost_acquisition = this.cost_acquisition + value.cost_acquisition;
+    result.cancel_premium = this.cancel_premium + value.cancel_premium;
     return result;
   }
 
@@ -65,6 +68,7 @@ export class ContractGuarantee {
     output.discount = this.discount;
     output.broker_fee = this.broker_fee;
     output.cost_acquisition = this.cost_acquisition;
+    output.cancel_premium = this.cancel_premium;
 
     return output;
   }
@@ -77,6 +81,7 @@ export class EntityIndividual {
   email: string;
   phone: string;
   birthday: string;
+  birthplace: string;
 
   static fromInput(input: any): EntityIndividual {
     let entitiy = new EntityIndividual();
@@ -87,6 +92,7 @@ export class EntityIndividual {
     entitiy.email = input.email;
     entitiy.phone = input.phone;
     entitiy.birthday = input.birthday;
+    entitiy.birthplace = input.birthplace;
 
     return entitiy;
   }
@@ -101,6 +107,7 @@ export class EntityCompany {
   email: string;
   phone: string;
   birthday: string;
+  birthplace: string;
   static fromInput(input: any): EntityCompany {
     let entity = new EntityCompany();
     entity.type = input.type;
@@ -111,6 +118,7 @@ export class EntityCompany {
     entity.email = input.email;
     entity.phone = input.phone;
     entity.birthday = input.birthday;
+    entity.birthplace = input.birthplace;
     return entity;
   }
 }
@@ -124,6 +132,7 @@ export class EntityNonProfit {
   email: string;
   phone: string;
   birthday: string;
+  birthplace: string;
   static fromInput(input: any): EntityCompany {
     let entity = new EntityCompany();
     entity.type = input.type;
@@ -134,6 +143,7 @@ export class EntityNonProfit {
     entity.email = input.email;
     entity.phone = input.phone;
     entity.birthday = input.birthday;
+    entity.birthplace = input.birthplace;
     return entity;
   }
 }
@@ -156,12 +166,10 @@ export class Contract {
   id: string;
   product_id: string;
 
-  event_num: number;
-  event_type: "new" | "update" | "cancel";
-  event_date: string;
+  version?: number;
+  timestamp: string;
 
-  ref: string;
-  debug?: string;
+  reference: string;
 
   customer_id: string;
   creation_date: string;
@@ -188,11 +196,9 @@ export class Contract {
     contract.portfolio_id = input.portfolio_id;
     contract.id = input.id;
     contract.product_id = input.product_id;
-    contract.event_num = input.event_num;
-    contract.event_type = input.event_type;
-    contract.event_date = input.event_date;
-    contract.ref = input.ref;
-    contract.debug = input.debug;
+    contract.version = input.version;
+    contract.timestamp = input.timestamp;
+    contract.reference = input.reference;
     contract.customer_id = input.customer_id;
     contract.creation_date = input.creation_date;
     contract.last_update = input.last_update;

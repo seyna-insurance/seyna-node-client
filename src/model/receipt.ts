@@ -1,16 +1,13 @@
 export class Receipt {
   portfolio_id: string;
   contract_id: string;
-  contract_event_num: number;
   product_id: string;
   id: string;
 
-  event_num: number;
-  event_type: "new" | "update" | "payment" | "overdue";
-  event_date: string;
+  version?: number;
+  timestamp: string;
 
-  ref: string;
-  debug?: string;
+  reference: string;
   issuance_date: string;
   due_date: string;
   payment_date?: string;
@@ -26,14 +23,11 @@ export class Receipt {
 
     receipt.portfolio_id = input.portfolio_id;
     receipt.contract_id = input.contract_id;
-    receipt.contract_event_num = input.contract_event_num;
     receipt.product_id = input.product_id;
     receipt.id = input.id;
-    receipt.event_num = input.event_num;
-    receipt.event_type = input.event_type;
-    receipt.event_date = input.event_date;
-    receipt.ref = input.ref;
-    receipt.debug = input.debug;
+    receipt.version = input.version;
+    receipt.timestamp = input.timestamp;
+    receipt.reference = input.reference;
     receipt.issuance_date = input.issuance_date;
     receipt.due_date = input.due_date;
     receipt.payment_date = input.payment_date;

@@ -3,11 +3,9 @@ export class Claim {
   contract_id: string;
   product_id: string;
   id: string;
-  event_num: number;
-  event_type: "new" | "revaluation" | "payment" | "close";
-  event_date: string;
-  ref: string;
-  debug?: string;
+  version?: number;
+  timestamp: string;
+  reference: string;
   creation_date: string;
   last_update: string;
   occurence_date: string;
@@ -25,10 +23,9 @@ export class Claim {
     claim.contract_id = input.contract_id;
     claim.product_id = input.product_id;
     claim.id = input.id;
-    claim.event_num = input.event_num;
-    claim.event_type = input.event_type;
-    claim.event_date = input.event_date;
-    claim.ref = input.ref;
+    claim.version = input.version;
+    claim.timestamp = input.timestamp;
+    claim.reference = input.reference;
     claim.creation_date = input.creation_date;
     claim.last_update = input.last_update;
     claim.occurence_date = input.occurence_date;

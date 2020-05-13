@@ -5,9 +5,6 @@ import { Portfolio } from "./model/portfolio";
 import { Receipt } from "./model/receipt";
 import { Settlement } from "./model/settlement";
 import { List } from "./model/list";
-import { Seyna } from ".";
-
-export const clientSym = Symbol();
 
 export type ListOptions = {
   from?: string;
