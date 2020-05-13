@@ -41,7 +41,7 @@ for await (let contract of seyna.iterContracts(portfolioId)) {
 let contractList: List<Contract> = await seyna.listContracts(portfolioId);
 
 // Get contract information
-let contract: Contract = await seyna.getContract(contractId);
+let contract: Contract = await seyna.getContract(portfolioId, contractId);
 ```
 
 ### Receipts
@@ -55,7 +55,7 @@ for await (let receipt of seyna.iterReceipts(portfolioId)) {
 let contractList: List<Receipt> = await seyna.listReceipts(portfolioId);
 
 // Get receipt information
-let receipt: Receipt = await seyna.getReceipt(receiptId);
+let receipt: Receipt = await seyna.getReceipt(portfolioId, receiptId);
 ```
 
 ### Claims
@@ -69,7 +69,7 @@ for await (let claim of seyna.iterClaims(portfolioId)) {
 let claimList: List<Claim> = await seyna.listClaims(portfolioId);
 
 // Get claim information
-let claim: Claim = await seyna.getClaim(claimId);
+let claim: Claim = await seyna.getClaim(portfolioId, claimId);
 ```
 
 ### Settlements
@@ -83,5 +83,8 @@ for await (let settlement of seyna.iterSettlements(portfolioId)) {
 let settlementList: List<Settlement> = await seyna.listSettlements(portfolioId);
 
 // Get settlement information
-let settlement: Settlement = await seyna.getSettlement(settlementId);
+let settlement: Settlement = await seyna.getSettlement(
+  portfolioId,
+  settlementId
+);
 ```

@@ -1,0 +1,6 @@
+node_modules/
+src/
+jest.config.js
+tsconfig.json
+build/**/*.test.js
+build/**/*.test.d.ts
