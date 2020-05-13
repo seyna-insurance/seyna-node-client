@@ -6,6 +6,7 @@ export class Claim {
   version?: number;
   timestamp: string;
   reference: string;
+  status: string;
   creation_date: string;
   last_update: string;
   occurence_date: string;
@@ -23,6 +24,7 @@ export class Claim {
     claim.contract_id = input.contract_id;
     claim.product_id = input.product_id;
     claim.id = input.id;
+    claim.status = input.status;
     claim.version = input.version;
     claim.timestamp = input.timestamp;
     claim.reference = input.reference;
