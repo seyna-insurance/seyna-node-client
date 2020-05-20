@@ -13,7 +13,7 @@ export class ContractGuarantees {
   }
 
   addGuarantee(guarantee_name: string, guarantee_data: ContractGuarantee) {
-    this.data[guarantee_name] = ContractGuarantee.fromInput(guarantee_data);
+    this.data[guarantee_name] = guarantee_data;
   }
 
   sum(): ContractGuarantee {
