@@ -98,4 +98,13 @@ export class ReceiptGuarantee {
     result.cost_acquisition = this.cost_acquisition + value.cost_acquisition;
     return result;
   }
+  negate(): ReceiptGuarantee {
+    let result = new ReceiptGuarantee();
+    result.premium = -this.premium;
+    result.tax = -this.tax;
+    result.discount = -this.discount;
+    result.broker_fee = -this.broker_fee;
+    result.cost_acquisition = -this.cost_acquisition;
+    return result;
+  }
 }
