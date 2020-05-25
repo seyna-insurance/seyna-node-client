@@ -274,7 +274,7 @@ export class Seyna {
   }
 
   async putSettlement(settlement: Settlement): Promise<Settlement> {
-    let url = `/portfoliod/${settlement.portfolio_id}/settlements/${settlement.id}`;
+    let url = `/portfolios/${settlement.portfolio_id}/settlements/${settlement.id}`;
     let body = await this.sendRequest("PUT", url, settlement);
     return Settlement.fromInput(body);
   }
