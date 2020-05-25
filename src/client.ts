@@ -24,12 +24,12 @@ export class Seyna {
     // Set request headers
     let headers: Headers = new Headers();
     headers.set("Accept", "application/json");
-
     headers.set(
-      "API-Key",
-      Buffer.from(`${this.apiKey}:${this.apiSecret}`, "binary").toString(
-        "base64"
-      )
+      "Authorization",
+      `Basic ${Buffer.from(
+        `${this.apiKey}:${this.apiSecret}`,
+        "binary"
+      ).toString("base64")}`
     );
     if (input) headers.set("Content-Type", "application/json");
 
