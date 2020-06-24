@@ -36,7 +36,6 @@ export class ContractGuarantee {
   discount: number = 0;
   broker_fee: number = 0;
   cost_acquisition: number = 0;
-  cancel_premium: number = 0;
 
   static fromInput(input: any): ContractGuarantee {
     let result = new ContractGuarantee();
@@ -45,7 +44,6 @@ export class ContractGuarantee {
     result.discount = input.discount;
     result.broker_fee = input.broker_fee;
     result.cost_acquisition = input.cost_acquisition;
-    result.cancel_premium = input.cancel_premium;
     return result;
   }
 
@@ -56,7 +54,6 @@ export class ContractGuarantee {
     result.discount = this.discount + value.discount;
     result.broker_fee = this.broker_fee + value.broker_fee;
     result.cost_acquisition = this.cost_acquisition + value.cost_acquisition;
-    result.cancel_premium = this.cancel_premium + value.cancel_premium;
     return result;
   }
 
@@ -68,7 +65,6 @@ export class ContractGuarantee {
     output.discount = this.discount;
     output.broker_fee = this.broker_fee;
     output.cost_acquisition = this.cost_acquisition;
-    output.cancel_premium = this.cancel_premium;
 
     return output;
   }
@@ -185,9 +181,10 @@ export class Contract {
   end_cover_date: string;
   coinsurance?: number;
   extra_broker_fee?: number;
+  guarantees: ContractGuarantees = new ContractGuarantees();
   cancel_date?: string;
   cancel_reason?: string;
-  guarantees: ContractGuarantees = new ContractGuarantees();
+  cancel_guarantees?: ContractGuarantees;
   product_data: any = {};
 
   static fromInput(input: any): Contract {
@@ -217,9 +214,14 @@ export class Contract {
     contract.end_cover_date = input.end_cover_date;
     contract.coinsurance = input.coinsurance;
     contract.extra_broker_fee = input.extra_broker_fee;
+
+    contract.guarantees = ContractGuarantees.fromInput(input.guarantees);
+
     contract.cancel_date = input.cancel_date;
     contract.cancel_reason = input.cancel_reason;
-    contract.guarantees = ContractGuarantees.fromInput(input.guarantees);
+    contract.cancel_guarantees = input.cancel_guarantees
+      ? ContractGuarantees.fromInput(input.cancel_guarantees)
+      : undefined;
     contract.product_data = input.product_data;
 
     return contract;

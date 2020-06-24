@@ -1,6 +1,5 @@
 export class Settlement {
   portfolio_id: string;
-  contract_id: string;
   claim_id: string;
   product_id: string;
   id: string;
@@ -18,7 +17,6 @@ export class Settlement {
   static fromInput(input: any): Settlement {
     let settlement = new Settlement();
     settlement.portfolio_id = input.portfolio_id;
-    settlement.contract_id = input.contract_id;
     settlement.claim_id = input.claim_id;
     settlement.product_id = input.product_id;
     settlement.id = input.id;
